@@ -2,7 +2,6 @@ import '../../../../core/helpers/database_helper.dart';
 import '../../../../core/helpers/shared_pref_helper.dart';
 import '../../../../core/networking/api_constants.dart';
 import '../../../../core/networking/api_service.dart';
-import '../../../home/data/models/surah_detail_response.dart';
 
 class SurahReaderRepo {
   final ApiService _apiService;
