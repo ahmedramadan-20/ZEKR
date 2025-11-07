@@ -1,9 +1,11 @@
 # Quran App
 
 A simple and elegant Quran application built with Flutter.
-
+<div align="center">
 ![App Screenshot](assets/images/screenshot.png) 
 
+
+</div>
 ## 📖 Features
 
 - **Full Quran:** Access all 114 Surahs.
