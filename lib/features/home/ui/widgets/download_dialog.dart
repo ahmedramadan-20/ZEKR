@@ -34,12 +34,18 @@ class _DownloadDialogState extends State {
         child: BlocConsumer<HomeCubit, HomeState>(
           listener: (context, state) {
             state.maybeWhen(
-              success: (_) {
-                // Close dialog when download is complete
-                if (Navigator.canPop(context)) {
-                  Navigator.of(context).pop();
-                }
-              },
+              success:
+                  (
+                    surahs,
+                    isDownloadingInBackground,
+                    downloadProgress,
+                    totalToDownload,
+                  ) {
+                    // Close dialog when download is complete
+                    if (Navigator.canPop(context)) {
+                      Navigator.of(context).pop();
+                    }
+                  },
               error: (message) {
                 // Show error and close dialog
                 if (Navigator.canPop(context)) {

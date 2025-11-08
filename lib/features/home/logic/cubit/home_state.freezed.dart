@@ -131,13 +131,13 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( int current,  int total)?  downloading,TResult Function( List<Surah> surahs)?  success,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( int current,  int total)?  downloading,TResult Function( List<Surah> surahs,  bool isDownloadingInBackground,  int? downloadProgress,  int? totalToDownload)?  success,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case Loading() when loading != null:
 return loading();case Downloading() when downloading != null:
 return downloading(_that.current,_that.total);case Success() when success != null:
-return success(_that.surahs);case Error() when error != null:
+return success(_that.surahs,_that.isDownloadingInBackground,_that.downloadProgress,_that.totalToDownload);case Error() when error != null:
 return error(_that.message);case _:
   return orElse();
 
@@ -156,13 +156,13 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( int current,  int total)  downloading,required TResult Function( List<Surah> surahs)  success,required TResult Function( String message)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( int current,  int total)  downloading,required TResult Function( List<Surah> surahs,  bool isDownloadingInBackground,  int? downloadProgress,  int? totalToDownload)  success,required TResult Function( String message)  error,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case Loading():
 return loading();case Downloading():
 return downloading(_that.current,_that.total);case Success():
-return success(_that.surahs);case Error():
+return success(_that.surahs,_that.isDownloadingInBackground,_that.downloadProgress,_that.totalToDownload);case Error():
 return error(_that.message);case _:
   throw StateError('Unexpected subclass');
 
@@ -180,13 +180,13 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( int current,  int total)?  downloading,TResult? Function( List<Surah> surahs)?  success,TResult? Function( String message)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( int current,  int total)?  downloading,TResult? Function( List<Surah> surahs,  bool isDownloadingInBackground,  int? downloadProgress,  int? totalToDownload)?  success,TResult? Function( String message)?  error,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case Loading() when loading != null:
 return loading();case Downloading() when downloading != null:
 return downloading(_that.current,_that.total);case Success() when success != null:
-return success(_that.surahs);case Error() when error != null:
+return success(_that.surahs,_that.isDownloadingInBackground,_that.downloadProgress,_that.totalToDownload);case Error() when error != null:
 return error(_that.message);case _:
   return null;
 
@@ -331,7 +331,7 @@ as int,
 
 
 class Success implements HomeState {
-  const Success(final  List<Surah> surahs): _surahs = surahs;
+  const Success({required final  List<Surah> surahs, this.isDownloadingInBackground = false, this.downloadProgress, this.totalToDownload}): _surahs = surahs;
   
 
  final  List<Surah> _surahs;
@@ -341,6 +341,9 @@ class Success implements HomeState {
   return EqualUnmodifiableListView(_surahs);
 }
 
+@JsonKey() final  bool isDownloadingInBackground;
+ final  int? downloadProgress;
+ final  int? totalToDownload;
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
@@ -352,16 +355,16 @@ $SuccessCopyWith<Success> get copyWith => _$SuccessCopyWithImpl<Success>(this, _
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Success&&const DeepCollectionEquality().equals(other._surahs, _surahs));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Success&&const DeepCollectionEquality().equals(other._surahs, _surahs)&&(identical(other.isDownloadingInBackground, isDownloadingInBackground) || other.isDownloadingInBackground == isDownloadingInBackground)&&(identical(other.downloadProgress, downloadProgress) || other.downloadProgress == downloadProgress)&&(identical(other.totalToDownload, totalToDownload) || other.totalToDownload == totalToDownload));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_surahs));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_surahs),isDownloadingInBackground,downloadProgress,totalToDownload);
 
 @override
 String toString() {
-  return 'HomeState.success(surahs: $surahs)';
+  return 'HomeState.success(surahs: $surahs, isDownloadingInBackground: $isDownloadingInBackground, downloadProgress: $downloadProgress, totalToDownload: $totalToDownload)';
 }
 
 
@@ -372,7 +375,7 @@ abstract mixin class $SuccessCopyWith<$Res> implements $HomeStateCopyWith<$Res> 
   factory $SuccessCopyWith(Success value, $Res Function(Success) _then) = _$SuccessCopyWithImpl;
 @useResult
 $Res call({
- List<Surah> surahs
+ List<Surah> surahs, bool isDownloadingInBackground, int? downloadProgress, int? totalToDownload
 });
 
 
@@ -389,10 +392,13 @@ class _$SuccessCopyWithImpl<$Res>
 
 /// Create a copy of HomeState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? surahs = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? surahs = null,Object? isDownloadingInBackground = null,Object? downloadProgress = freezed,Object? totalToDownload = freezed,}) {
   return _then(Success(
-null == surahs ? _self._surahs : surahs // ignore: cast_nullable_to_non_nullable
-as List<Surah>,
+surahs: null == surahs ? _self._surahs : surahs // ignore: cast_nullable_to_non_nullable
+as List<Surah>,isDownloadingInBackground: null == isDownloadingInBackground ? _self.isDownloadingInBackground : isDownloadingInBackground // ignore: cast_nullable_to_non_nullable
+as bool,downloadProgress: freezed == downloadProgress ? _self.downloadProgress : downloadProgress // ignore: cast_nullable_to_non_nullable
+as int?,totalToDownload: freezed == totalToDownload ? _self.totalToDownload : totalToDownload // ignore: cast_nullable_to_non_nullable
+as int?,
   ));
 }
 
