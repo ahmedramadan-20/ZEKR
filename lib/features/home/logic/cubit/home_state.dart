@@ -11,6 +11,11 @@ class HomeState with _$HomeState {
     required int current,
     required int total,
   }) = Downloading;
-  const factory HomeState.success(List<Surah> surahs) = Success;
+  const factory HomeState.success({
+    required List<Surah> surahs,
+    @Default(false) bool isDownloadingInBackground,
+    int? downloadProgress,
+    int? totalToDownload,
+  }) = Success;
   const factory HomeState.error(String message) = Error;
 }

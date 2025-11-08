@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../data/models/surah_response.dart';
 import '../../data/repos/home_repo.dart';
 import 'home_state.dart';
 
@@ -11,10 +12,54 @@ class HomeCubit extends Cubit<HomeState> {
     emit(const HomeState.loading());
     try {
       final surahs = await _homeRepo.getSurahList();
-      emit(HomeState.success(surahs));
+      final needsBackgroundDownload = !_homeRepo.isAllSurahsDownloaded();
+
+      emit(
+        HomeState.success(
+          surahs: surahs,
+          isDownloadingInBackground: needsBackgroundDownload,
+          downloadProgress: needsBackgroundDownload ? 0 : null,
+          totalToDownload: needsBackgroundDownload ? 114 : null,
+        ),
+      );
+
+      // Start background download if not completed
+      if (needsBackgroundDownload) {
+        _downloadInBackground(surahs);
+      }
     } catch (e) {
       emit(HomeState.error('حدث خطأ أثناء تحميل السور: ${e.toString()}'));
     }
+  }
+
+  void _downloadInBackground(List<Surah> surahs) {
+    _homeRepo
+        .downloadAllSurahs(
+          onProgress: (current, total) {
+            if (state is Success) {
+              emit(
+                HomeState.success(
+                  surahs: surahs,
+                  isDownloadingInBackground: true,
+                  downloadProgress: current,
+                  totalToDownload: total,
+                ),
+              );
+            }
+          },
+        )
+        .then((_) {
+          if (state is Success) {
+            emit(
+              HomeState.success(
+                surahs: surahs,
+                isDownloadingInBackground: false,
+                downloadProgress: null,
+                totalToDownload: null,
+              ),
+            );
+          }
+        });
   }
 
   Future refreshSurahList() async {

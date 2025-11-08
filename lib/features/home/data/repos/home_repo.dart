@@ -64,11 +64,27 @@ class HomeRepo {
     }
   }
 
-  // Download all Surahs
+  // Download all Surahs with progress reporting
   Future downloadAllSurahs({
     required Function(int current, int total) onProgress,
   }) async {
+    return _downloadAllSurahs(onProgress: onProgress);
+  }
+
+  // Download all Surahs in background
+  Future downloadAllSurahsInBackground() async {
+    return _downloadAllSurahs(onProgress: (_, __) {});
+  }
+
+  // Internal download implementation
+  Future _downloadAllSurahs({
+    required Function(int current, int total) onProgress,
+  }) async {
     try {
+      if (_sharedPrefHelper.isAllSurahsDownloaded()) {
+        return;
+      }
+
       // Get list of all surahs
       final surahs = await getSurahList();
       final total = surahs.length;
@@ -107,7 +123,8 @@ class HomeRepo {
       // Mark as completed
       await _sharedPrefHelper.setAllSurahsDownloaded(true);
     } catch (e) {
-      rethrow;
+      print('Error in background download: $e');
+      // Don't rethrow in background download
     }
   }
 
