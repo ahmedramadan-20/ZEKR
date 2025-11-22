@@ -128,12 +128,12 @@ return error(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( SurahDetail surahDetail,  int currentPage,  List currentPageAyahs)?  success,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  initial,TResult Function()?  loading,TResult Function( SurahDetail surahDetail,  int currentPage,  List currentPageAyahs,  Set<int> bookmarkedAyahs)?  success,TResult Function( String message)?  error,required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case Loading() when loading != null:
 return loading();case Success() when success != null:
-return success(_that.surahDetail,_that.currentPage,_that.currentPageAyahs);case Error() when error != null:
+return success(_that.surahDetail,_that.currentPage,_that.currentPageAyahs,_that.bookmarkedAyahs);case Error() when error != null:
 return error(_that.message);case _:
   return orElse();
 
@@ -152,12 +152,12 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( SurahDetail surahDetail,  int currentPage,  List currentPageAyahs)  success,required TResult Function( String message)  error,}) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  initial,required TResult Function()  loading,required TResult Function( SurahDetail surahDetail,  int currentPage,  List currentPageAyahs,  Set<int> bookmarkedAyahs)  success,required TResult Function( String message)  error,}) {final _that = this;
 switch (_that) {
 case _Initial():
 return initial();case Loading():
 return loading();case Success():
-return success(_that.surahDetail,_that.currentPage,_that.currentPageAyahs);case Error():
+return success(_that.surahDetail,_that.currentPage,_that.currentPageAyahs,_that.bookmarkedAyahs);case Error():
 return error(_that.message);case _:
   throw StateError('Unexpected subclass');
 
@@ -175,12 +175,12 @@ return error(_that.message);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( SurahDetail surahDetail,  int currentPage,  List currentPageAyahs)?  success,TResult? Function( String message)?  error,}) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  initial,TResult? Function()?  loading,TResult? Function( SurahDetail surahDetail,  int currentPage,  List currentPageAyahs,  Set<int> bookmarkedAyahs)?  success,TResult? Function( String message)?  error,}) {final _that = this;
 switch (_that) {
 case _Initial() when initial != null:
 return initial();case Loading() when loading != null:
 return loading();case Success() when success != null:
-return success(_that.surahDetail,_that.currentPage,_that.currentPageAyahs);case Error() when error != null:
+return success(_that.surahDetail,_that.currentPage,_that.currentPageAyahs,_that.bookmarkedAyahs);case Error() when error != null:
 return error(_that.message);case _:
   return null;
 
@@ -257,7 +257,7 @@ String toString() {
 
 
 class Success implements SurahReaderState {
-  const Success({required this.surahDetail, required this.currentPage, required final  List currentPageAyahs}): _currentPageAyahs = currentPageAyahs;
+  const Success({required this.surahDetail, required this.currentPage, required final  List currentPageAyahs, required final  Set<int> bookmarkedAyahs}): _currentPageAyahs = currentPageAyahs,_bookmarkedAyahs = bookmarkedAyahs;
   
 
  final  SurahDetail surahDetail;
@@ -267,6 +267,13 @@ class Success implements SurahReaderState {
   if (_currentPageAyahs is EqualUnmodifiableListView) return _currentPageAyahs;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_currentPageAyahs);
+}
+
+ final  Set<int> _bookmarkedAyahs;
+ Set<int> get bookmarkedAyahs {
+  if (_bookmarkedAyahs is EqualUnmodifiableSetView) return _bookmarkedAyahs;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableSetView(_bookmarkedAyahs);
 }
 
 
@@ -280,16 +287,16 @@ $SuccessCopyWith<Success> get copyWith => _$SuccessCopyWithImpl<Success>(this, _
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Success&&(identical(other.surahDetail, surahDetail) || other.surahDetail == surahDetail)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&const DeepCollectionEquality().equals(other._currentPageAyahs, _currentPageAyahs));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Success&&(identical(other.surahDetail, surahDetail) || other.surahDetail == surahDetail)&&(identical(other.currentPage, currentPage) || other.currentPage == currentPage)&&const DeepCollectionEquality().equals(other._currentPageAyahs, _currentPageAyahs)&&const DeepCollectionEquality().equals(other._bookmarkedAyahs, _bookmarkedAyahs));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,surahDetail,currentPage,const DeepCollectionEquality().hash(_currentPageAyahs));
+int get hashCode => Object.hash(runtimeType,surahDetail,currentPage,const DeepCollectionEquality().hash(_currentPageAyahs),const DeepCollectionEquality().hash(_bookmarkedAyahs));
 
 @override
 String toString() {
-  return 'SurahReaderState.success(surahDetail: $surahDetail, currentPage: $currentPage, currentPageAyahs: $currentPageAyahs)';
+  return 'SurahReaderState.success(surahDetail: $surahDetail, currentPage: $currentPage, currentPageAyahs: $currentPageAyahs, bookmarkedAyahs: $bookmarkedAyahs)';
 }
 
 
@@ -300,7 +307,7 @@ abstract mixin class $SuccessCopyWith<$Res> implements $SurahReaderStateCopyWith
   factory $SuccessCopyWith(Success value, $Res Function(Success) _then) = _$SuccessCopyWithImpl;
 @useResult
 $Res call({
- SurahDetail surahDetail, int currentPage, List currentPageAyahs
+ SurahDetail surahDetail, int currentPage, List currentPageAyahs, Set<int> bookmarkedAyahs
 });
 
 
@@ -317,12 +324,13 @@ class _$SuccessCopyWithImpl<$Res>
 
 /// Create a copy of SurahReaderState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') $Res call({Object? surahDetail = null,Object? currentPage = null,Object? currentPageAyahs = null,}) {
+@pragma('vm:prefer-inline') $Res call({Object? surahDetail = null,Object? currentPage = null,Object? currentPageAyahs = null,Object? bookmarkedAyahs = null,}) {
   return _then(Success(
 surahDetail: null == surahDetail ? _self.surahDetail : surahDetail // ignore: cast_nullable_to_non_nullable
 as SurahDetail,currentPage: null == currentPage ? _self.currentPage : currentPage // ignore: cast_nullable_to_non_nullable
 as int,currentPageAyahs: null == currentPageAyahs ? _self._currentPageAyahs : currentPageAyahs // ignore: cast_nullable_to_non_nullable
-as List,
+as List,bookmarkedAyahs: null == bookmarkedAyahs ? _self._bookmarkedAyahs : bookmarkedAyahs // ignore: cast_nullable_to_non_nullable
+as Set<int>,
   ));
 }
 

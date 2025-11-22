@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
-import '../../features/home/data/models/surah_response.dart';
-import '../../features/home/data/models/surah_detail_response.dart';
+import '../../features/quran/data/models/surah_response.dart';
+import '../../features/quran/data/models/surah_detail_response.dart';
+import 'arabic_utils.dart';
 
 class DatabaseHelper {
   static final DatabaseHelper instance = DatabaseHelper._init();
@@ -91,6 +92,19 @@ class DatabaseHelper {
     }).toList();
   }
 
+  Future<Surah?> getSurahById(int surahNumber) async {
+    final db = await database;
+    final List<Map<String, dynamic>> result = await db.query(
+      'surahs',
+      where: 'number = ?',
+      whereArgs: [surahNumber],
+      limit: 1,
+    );
+
+    if (result.isEmpty) return null;
+    return Surah.fromJson(result.first);
+  }
+
   Future<bool> hasSurahs() async {
     final db = await database;
     final result = await db.query('surahs', limit: 1);
@@ -139,8 +153,37 @@ class DatabaseHelper {
     await db.delete('surah_details');
   }
 
+  // Search Ayahs by text (diacritic-insensitive)
+  Future<List<Map<String, dynamic>>> searchAyahs(String query) async {
+    try {
+      final db = await database;
+      final results = <Map<String, dynamic>>[];
+
+      // Get all surah details
+      final surahDetailsResult = await db.query('surah_details');
+
+      for (var row in surahDetailsResult) {
+        final data = jsonDecode(row['data'] as String) as Map<String, dynamic>;
+        final surahDetail = SurahDetail.fromJson(data);
+
+        // Search through ayahs (ignore diacritics)
+        for (var ayah in surahDetail.ayahs) {
+          if (ArabicUtils.containsIgnoreDiacritics(ayah.text, query)) {
+            results.add({'surahDetail': surahDetail, 'ayah': ayah});
+          }
+        }
+      }
+
+      return results;
+    } catch (e) {
+      return [];
+    }
+  }
+
   Future<void> close() async {
-    final db = await database;
-    await db.close();
+    if (_database != null && _database!.isOpen) {
+      await _database!.close();
+      _database = null;
+    }
   }
 }
