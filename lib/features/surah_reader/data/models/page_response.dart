@@ -1,6 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
-import '../../../home/data/models/surah_detail_response.dart';
+import '../../../quran/data/models/surah_detail_response.dart';
 
 part 'page_response.g.dart';
 

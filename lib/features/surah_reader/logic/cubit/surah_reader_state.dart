@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../home/data/models/surah_detail_response.dart';
+import '../../../quran/data/models/surah_detail_response.dart';
 
 part 'surah_reader_state.freezed.dart';
 
@@ -12,6 +12,7 @@ class SurahReaderState with _$SurahReaderState {
     required SurahDetail surahDetail,
     required int currentPage,
     required List currentPageAyahs,
+    required Set<int> bookmarkedAyahs,
   }) = Success;
   const factory SurahReaderState.error(String message) = Error;
 }

@@ -2,7 +2,6 @@ import '../../../../core/helpers/database_helper.dart';
 import '../../../../core/helpers/shared_pref_helper.dart';
 import '../../../../core/networking/api_constants.dart';
 import '../../../../core/networking/api_service.dart';
-import '../../../home/data/models/surah_detail_response.dart';
 
 class SurahReaderRepo {
   final ApiService _apiService;
@@ -52,10 +51,12 @@ class SurahReaderRepo {
   // Save last read position
   Future saveLastReadPosition({
     required int surahNumber,
+    required String surahName,
     required int pageNumber,
     int? ayahNumber,
   }) async {
     await _sharedPrefHelper.saveLastReadSurah(surahNumber);
+    await _sharedPrefHelper.saveLastReadSurahName(surahName);
     await _sharedPrefHelper.saveLastReadPage(pageNumber);
     if (ayahNumber != null) {
       await _sharedPrefHelper.saveLastReadAyah(ayahNumber);
@@ -66,8 +67,50 @@ class SurahReaderRepo {
   Map getLastReadPosition() {
     return {
       'surah': _sharedPrefHelper.getLastReadSurah(),
+      'surahName': _sharedPrefHelper.getLastReadSurahName(),
       'page': _sharedPrefHelper.getLastReadPage(),
       'ayah': _sharedPrefHelper.getLastReadAyah(),
     };
+  }
+
+  // Bookmarks
+  Future<void> addBookmark({
+    required int surahNumber,
+    required String surahName,
+    required int ayahNumber,
+    required int pageNumber,
+  }) async {
+    await _sharedPrefHelper.addBookmark(
+      surahNumber: surahNumber,
+      surahName: surahName,
+      ayahNumber: ayahNumber,
+      pageNumber: pageNumber,
+    );
+  }
+
+  Future<void> removeBookmark(int surahNumber, int ayahNumber) async {
+    await _sharedPrefHelper.removeBookmark(surahNumber, ayahNumber);
+  }
+
+  Future<Set<int>> getBookmarkedAyahsForSurah(int surahNumber) async {
+    final allBookmarks = _sharedPrefHelper.getBookmarksList();
+    final ayahNumbers = allBookmarks
+        .where((bookmark) => bookmark['surahNumber'] == surahNumber)
+        .map((bookmark) => bookmark['ayahNumber'] as int)
+        .toSet();
+    return ayahNumbers;
+  }
+
+  bool isAyahBookmarked(int surahNumber, int ayahNumber) {
+    return _sharedPrefHelper.isBookmarked(surahNumber, ayahNumber);
+  }
+
+  // Stats tracking
+  Future<void> incrementDailyPages() async {
+    await _sharedPrefHelper.incrementDailyPages();
+  }
+
+  Future<void> incrementDailyAyahs(int count) async {
+    await _sharedPrefHelper.incrementDailyAyahs(count);
   }
 }

@@ -1,0 +1,67 @@
+feat: Settings refactoring and complete theme system
+
+# Settings Screen Refactoring (130 lines removed)
+- Created reusable gradient card widgets:
+  - SettingCard (interactive gradient card)
+  - SettingSwitchCard (gradient card with switch)
+  - SettingInfoCard (non-interactive gradient card)
+- Refactored settings_screen.dart from 565 to 435 lines (23% reduction)
+- Removed 3 inline builder methods
+- Applied beautiful gradient styling matching home screen
+- All settings cards now use consistent gradient design
+
+# Complete Dark/Light Theme System
+- Implemented full theme management with BLoC pattern:
+  - theme_state.dart (Freezed state: light/dark)
+  - theme_cubit.dart (theme switching logic)
+  - Theme persistence via SharedPreferences
+- Updated app_theme.dart with complete ThemeData:
+  - AppTheme.lightTheme (full light theme configuration)
+  - AppTheme.darkTheme (full dark theme configuration)
+- Added dark theme colors to app_colors.dart:
+  - darkBackground (#0F1419)
+  - darkSurface (#1A1D3D)
+  - darkCardBackground, darkTextPrimary, darkTextSecondary
+- Integrated theme system into app.dart:
+  - BlocProvider<ThemeCubit> at app root
+  - BlocBuilder for reactive theme switching
+  - theme, darkTheme, and themeMode configuration
+- Registered ThemeCubit in dependency_injection.dart
+- Fixed SharedPrefHelper file corruption:
+  - Completely rewrote from 489 → 303 clean lines
+  - Added getIsDarkMode() and setIsDarkMode() methods
+  - All original methods preserved
+
+# Settings UI Updates
+- Added "المظهر" (Appearance) section as first section
+- Dark mode toggle ("الوضع الليلي") with purple gradient
+- All setting cards now use gradient colors:
+  - Reading settings: Primary + Secondary colors
+  - Data management: Juz badge + Error colors
+  - App info: Accent + Yellow colors
+- Theme-aware text colors for dark mode support
+
+# Files Created (5 new)
+1. lib/features/settings/ui/widgets/setting_card.dart
+2. lib/features/settings/ui/widgets/setting_switch_card.dart
+3. lib/features/settings/ui/widgets/setting_info_card.dart
+4. lib/core/theming/theme_state.dart
+5. lib/core/theming/theme_cubit.dart
+
+# Files Modified (6 updated)
+1. lib/core/helpers/shared_pref_helper.dart (rewritten, +theme methods)
+2. lib/core/theming/app_colors.dart (+dark theme colors)
+3. lib/core/theming/app_theme.dart (complete light/dark themes)
+4. lib/core/di/dependency_injection.dart (+ThemeCubit registration)
+5. lib/app.dart (theme integration with BLoC)
+6. lib/features/settings/ui/settings_screen.dart (refactored with new widgets)
+
+# Impact
+- ~130 lines removed from settings screen (23% reduction)
+- ~600 lines added for complete theme system
+- Full dark/light mode support across entire app
+- Unified gradient design between home and settings
+- Professional, modern UI/UX
+- Theme preference persisted and restored on app restart
+
+See SETTINGS_AND_THEME_COMPLETE.md for detailed report.
