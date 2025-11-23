@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_plus/share_plus.dart';
-import '../../../core/helpers/extensions.dart';
+
 import '../../../core/helpers/shared_pref_helper.dart';
 import '../../../core/theming/app_colors.dart';
 import '../../../core/theming/app_text_styles.dart';
 import '../../../core/theming/theme_cubit.dart';
 import '../../../core/di/dependency_injection.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import '../../../core/widgets/custom_app_bar.dart';
 import 'widgets/setting_card.dart';
 import 'widgets/setting_switch_card.dart';
 import 'widgets/setting_info_card.dart';
@@ -60,28 +61,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: Text(
-          'الإعدادات',
-          style: AppTextStyles.titleLarge.copyWith(
-            fontFamily: 'Amiri',
-            color: Theme.of(context).brightness == Brightness.dark
-                ? Colors.white
-                : AppColors.textPrimary,
-          ),
-        ),
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Theme.of(context).brightness == Brightness.dark
-                ? Colors.white
-                : AppColors.iconPrimary,
-          ),
-          onPressed: () => context.pop(),
-        ),
-      ),
+      appBar: const CustomAppBar(title: 'الإعدادات'),
       body: ListView(
         padding: EdgeInsets.all(24.w),
         children: [

@@ -26,7 +26,7 @@ class PageIndicator extends StatelessWidget {
         color: Colors.white,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Theme.of(context).shadowColor.withOpacity(0.05),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -67,7 +67,11 @@ class PageIndicator extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.auto_stories, color: Colors.white, size: 18.w),
+                      Icon(
+                        Icons.auto_stories,
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        size: 18.w,
+                      ),
                       SizedBox(width: 8.w),
                       Text(
                         currentPage.toArabicNumber,

@@ -5,8 +5,9 @@ import '../../../core/helpers/extensions.dart';
 import '../../../core/routing/app_router.dart';
 import '../../../core/routing/routes.dart';
 import '../../../core/theming/app_colors.dart';
-import '../../../core/theming/app_text_styles.dart';
+
 import '../../../core/widgets/app_loading_indicator.dart';
+import '../../../core/widgets/custom_app_bar.dart';
 import '../logic/cubit/bookmarks_cubit.dart';
 import '../logic/cubit/bookmarks_state.dart';
 import 'widgets/bookmark_item.dart';
@@ -18,20 +19,8 @@ class BookmarksScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: AppBar(
-        backgroundColor: AppColors.primary,
-        elevation: 0,
-        title: Text(
-          'المفضلة',
-          style: AppTextStyles.titleLarge.copyWith(
-            color: Colors.white,
-            fontFamily: 'Amiri',
-          ),
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => context.pop(),
-        ),
+      appBar: CustomAppBar(
+        title: 'المفضلة',
         actions: [
           BlocBuilder<BookmarksCubit, BookmarksState>(
             builder: (context, state) {
@@ -64,7 +53,9 @@ class BookmarksScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final bookmark = bookmarks[index];
                 return RepaintBoundary(
-                  key: ValueKey('bm_${bookmark['surahNumber']}_${bookmark['ayahNumber']}'),
+                  key: ValueKey(
+                    'bm_${bookmark['surahNumber']}_${bookmark['ayahNumber']}',
+                  ),
                   child: BookmarkItem(
                     bookmark: bookmark,
                     onTap: () {

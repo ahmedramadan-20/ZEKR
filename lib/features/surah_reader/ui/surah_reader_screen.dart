@@ -6,6 +6,7 @@ import 'package:wakelock_plus/wakelock_plus.dart';
 import '../../../core/theming/app_colors.dart';
 import '../../../core/widgets/app_error_widget.dart';
 import '../../../core/widgets/app_loading_indicator.dart';
+import '../../../core/widgets/custom_app_bar.dart';
 import '../../../core/routing/routes.dart';
 import '../../../core/helpers/shared_pref_helper.dart';
 import '../../../core/di/dependency_injection.dart';
@@ -81,56 +82,18 @@ class _SurahReaderScreenState extends State<SurahReaderScreen> {
     final cubit = context.read<SurahReaderCubit>();
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: CustomAppBar(
+        title: widget.surahName,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.share),
+            onPressed: () => _shareSurah(context),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Column(
           children: [
-            // Modern Gradient Header
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                gradient: AppColors.getPrimaryGradient(context),
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(32),
-                  bottomRight: Radius.circular(32),
-                ),
-              ),
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(16.w, 16.h, 16.w, 20.h),
-                child: Row(
-                  children: [
-                    IconButton(
-                      icon: const Icon(Icons.arrow_back, color: Colors.white),
-                      onPressed: () => Navigator.of(context).pop(),
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
-                    ),
-                    SizedBox(width: 12.w),
-                    Expanded(
-                      child: Text(
-                        widget.surahName,
-                        style: TextStyle(
-                          fontSize: 22.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontFamily: 'Amiri',
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    SizedBox(width: 12.w),
-                    IconButton(
-                      icon: const Icon(Icons.share, color: Colors.white),
-                      onPressed: () {
-                        _shareSurah(context);
-                      },
-                      padding: EdgeInsets.zero,
-                      constraints: const BoxConstraints(),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
             // Surah Content
             Expanded(
               child: BlocBuilder<SurahReaderCubit, SurahReaderState>(

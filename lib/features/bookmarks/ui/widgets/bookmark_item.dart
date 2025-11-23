@@ -49,7 +49,7 @@ class BookmarkItem extends StatelessWidget {
                     gradient: AppColors.cardGradient,
                     borderRadius: BorderRadius.circular(12.r),
                   ),
-                  child: Icon(Icons.bookmark, color: Colors.white, size: 24.w),
+                  child: Icon(Icons.bookmark, color: Theme.of(context).colorScheme.onPrimary, size: 24.w),
                 ),
 
                 SizedBox(width: 16.w),

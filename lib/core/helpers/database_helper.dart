@@ -265,8 +265,12 @@ class DatabaseHelper {
       }
 
       // 1. Try FTS MATCH with tokenized prefix query (supports multi-word)
-      final tokens = normalizedQuery.split(RegExp(r'\s+')).where((t) => t.isNotEmpty);
-      final ftsQuery = tokens.isEmpty ? '$normalizedQuery*' : tokens.map((t) => '$t*').join(' AND ');
+      final tokens = normalizedQuery
+          .split(RegExp(r'\s+'))
+          .where((t) => t.isNotEmpty);
+      final ftsQuery = tokens.isEmpty
+          ? '$normalizedQuery*'
+          : tokens.map((t) => '$t*').join(' AND ');
 
       List<Map<String, Object?>> results = [];
       try {
@@ -310,7 +314,7 @@ class DatabaseHelper {
           ORDER BY fts.surahNumber, fts.ayahNumber
           LIMIT 100
         ''',
-          ['%' + normalizedQuery.replaceAll(' ', '%') + '%'],
+          ['%${normalizedQuery.replaceAll(' ', '%')}%'],
         );
       }
 
@@ -320,7 +324,8 @@ class DatabaseHelper {
         final legacyOut = <Map<String, dynamic>>[];
         for (var row in rows) {
           if (legacyOut.length >= 50) break;
-          final data = jsonDecode(row['data'] as String) as Map<String, dynamic>;
+          final data =
+              jsonDecode(row['data'] as String) as Map<String, dynamic>;
           final detail = SurahDetail.fromJson(data);
           for (var ayah in detail.ayahs) {
             if (ArabicUtils.containsIgnoreDiacritics(ayah.text, query)) {

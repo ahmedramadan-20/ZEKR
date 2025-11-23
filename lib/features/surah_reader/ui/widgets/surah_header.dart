@@ -44,7 +44,7 @@ class SurahHeader extends StatelessWidget {
           Text(
             surahName,
             style: AppTextStyles.surahNameArabic.copyWith(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.onPrimary,
               fontSize: 32.sp,
             ),
           ),
@@ -66,7 +66,7 @@ class SurahHeader extends StatelessWidget {
           Container(
             height: 1,
             width: 100.w,
-            color: Colors.white.withOpacity(0.3),
+            color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.3),
           ),
 
           SizedBox(height: 16.h),

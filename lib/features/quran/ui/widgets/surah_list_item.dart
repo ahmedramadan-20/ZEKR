@@ -63,7 +63,7 @@ class SurahListItem extends StatelessWidget {
                   child: Text(
                     surah.number.toArabicNumber,
                     style: AppTextStyles.titleMedium.copyWith(
-                      color: isLastRead ? Colors.white : AppColors.primary,
+                      color: isLastRead ? Theme.of(context).colorScheme.onPrimary : AppColors.primary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),

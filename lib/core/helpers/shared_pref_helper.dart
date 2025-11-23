@@ -246,6 +246,43 @@ class SharedPrefHelper {
     _sharedPreferences.setInt('stats_daily_ayahs', 0);
   }
 
+  // Search History
+  Future<List<String>> getSearchHistory() async {
+    final jsonString = _sharedPreferences.getString('search_history');
+    if (jsonString == null || jsonString.isEmpty) return [];
+    try {
+      final list = List<String>.from(jsonDecode(jsonString) as List);
+      return list;
+    } catch (_) {
+      return [];
+    }
+  }
+
+  Future<void> addSearchHistory(String query, {int maxItems = 10}) async {
+    final q = query.trim();
+    if (q.isEmpty) return;
+    final list = await getSearchHistory();
+    // Remove if duplicate
+    list.removeWhere((e) => e == q);
+    // Insert at start
+    list.insert(0, q);
+    // Cap
+    if (list.length > maxItems) {
+      list.removeRange(maxItems, list.length);
+    }
+    await _sharedPreferences.setString('search_history', jsonEncode(list));
+  }
+
+  Future<void> clearSearchHistory() async {
+    await _sharedPreferences.remove('search_history');
+  }
+
+  Future<void> removeSearchHistoryItem(String query) async {
+    final list = await getSearchHistory();
+    list.removeWhere((e) => e == query);
+    await _sharedPreferences.setString('search_history', jsonEncode(list));
+  }
+
   // Clear all data
   Future clearAll() async {
     await _sharedPreferences.clear();

@@ -6,6 +6,7 @@ import '../../../core/routing/app_router.dart';
 import '../../../core/routing/routes.dart';
 import '../../../core/theming/app_colors.dart';
 import '../../../core/theming/app_text_styles.dart';
+import '../../../core/widgets/custom_app_bar.dart';
 import '../../../core/widgets/app_error_widget.dart';
 import '../../../core/widgets/app_loading_indicator.dart';
 import '../logic/cubit/quran_cubit.dart';
@@ -34,72 +35,24 @@ class _QuranScreenState extends State<QuranScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: CustomAppBar(
+        title: 'القرآن الكريم',
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search),
+            onPressed: () => context.pushNamed(Routes.searchScreen),
+          ),
+          IconButton(
+            icon: const Icon(Icons.settings_outlined),
+            onPressed: () => context.pushNamed(Routes.settingsScreen),
+          ),
+        ],
+      ),
       body: SafeArea(
         child: Column(
           children: [
-            // Modern Gradient Header
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                gradient: AppColors.getPrimaryGradient(context),
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(32),
-                  bottomRight: Radius.circular(32),
-                ),
-              ),
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(16.w, 20.h, 16.w, 24.h),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // Title and Actions
-                    Row(
-                      children: [
-                        // Back button (if can pop)
-                        if (Navigator.of(context).canPop())
-                          IconButton(
-                            icon: const Icon(
-                              Icons.arrow_back,
-                              color: Colors.white,
-                            ),
-                            onPressed: () => Navigator.of(context).pop(),
-                            padding: EdgeInsets.zero,
-                            constraints: const BoxConstraints(),
-                          ),
-                        if (Navigator.of(context).canPop())
-                          SizedBox(width: 12.w),
-                        Expanded(
-                          child: Text(
-                            'القرآن الكريم',
-                            style: TextStyle(
-                              fontSize: 24.sp,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                              fontFamily: 'Amiri',
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                          icon: const Icon(Icons.search, color: Colors.white),
-                          onPressed: () {
-                            context.pushNamed(Routes.searchScreen);
-                          },
-                        ),
-                        IconButton(
-                          icon: const Icon(
-                            Icons.settings_outlined,
-                            color: Colors.white,
-                          ),
-                          onPressed: () {
-                            context.pushNamed(Routes.settingsScreen);
-                          },
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-            ),
+            // Header replaced by CustomAppBar
+            SizedBox(height: 8.h),
 
             // Surah List
             Expanded(

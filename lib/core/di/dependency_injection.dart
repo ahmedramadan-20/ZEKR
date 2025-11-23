@@ -43,7 +43,7 @@ Future setupGetIt() async {
 
   // Search Feature
   getIt.registerLazySingleton(() => SearchRepo(getIt()));
-  getIt.registerFactory(() => SearchCubit(getIt()));
+  getIt.registerFactory(() => SearchCubit(getIt(), getIt()));
 
   // Bookmarks Feature
   getIt.registerLazySingleton(() => BookmarksRepo(getIt()));

@@ -51,7 +51,7 @@ class PrayerTimeCard extends StatelessWidget {
             child: Icon(
               _getPrayerIcon(prayer.type),
               color: isNext
-                  ? Colors.white
+                  ? Theme.of(context).colorScheme.onPrimary
                   : hasPassed
                       ? AppColors.textSecondary
                       : AppColors.primary,

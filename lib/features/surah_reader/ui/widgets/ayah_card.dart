@@ -204,7 +204,7 @@ class AyahCard extends StatelessWidget {
         SnackBar(
           content: Row(
             children: [
-              Icon(Icons.check_circle, color: Colors.white, size: 20.w),
+              Icon(Icons.check_circle, color: Theme.of(context).colorScheme.onPrimary, size: 20.w),
               SizedBox(width: 12.w),
               Text(
                 'تم نسخ الآية',

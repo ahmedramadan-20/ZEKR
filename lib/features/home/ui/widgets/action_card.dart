@@ -22,8 +22,11 @@ class ActionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Create lighter gradient variations of the color
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final gradientStart = color;
-    final gradientEnd = Color.lerp(color, Colors.white, 0.3)!;
+    final gradientEnd = isDark
+        ? Color.lerp(color, Colors.black, 0.3)!
+        : Color.lerp(color, Colors.white, 0.3)!;
 
     return Material(
       color: Colors.transparent,
@@ -54,10 +57,10 @@ class ActionCard extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(12.w),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.3),
+                  color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.3),
                   borderRadius: BorderRadius.circular(12.r),
                 ),
-                child: Icon(icon, color: Colors.white, size: 28.w),
+                child: Icon(icon, color: Theme.of(context).colorScheme.onPrimary, size: 28.w),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,7 +69,7 @@ class ActionCard extends StatelessWidget {
                     title,
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
                       fontFamily: 'Amiri',
-                      color: Colors.white,
+                      color: Theme.of(context).colorScheme.onPrimary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -74,7 +77,7 @@ class ActionCard extends StatelessWidget {
                   Text(
                     subtitle,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: Colors.white.withOpacity(0.9),
+                      color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.9),
                     ),
                   ),
                 ],

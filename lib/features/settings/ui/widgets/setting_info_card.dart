@@ -44,7 +44,7 @@ class SettingInfoCard extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(12.w),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.25),
+              color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.25),
               borderRadius: BorderRadius.circular(12.r),
             ),
             child: Icon(icon, color: Colors.white, size: 24.w),
@@ -59,14 +59,14 @@ class SettingInfoCard extends StatelessWidget {
                   style: AppTextStyles.titleSmall.copyWith(
                     fontFamily: 'Amiri',
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onPrimary,
                   ),
                 ),
                 SizedBox(height: 4.h),
                 Text(
                   subtitle,
                   style: AppTextStyles.caption.copyWith(
-                    color: Colors.white.withOpacity(0.8),
+                    color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.8),
                   ),
                 ),
               ],

@@ -48,21 +48,21 @@ class StatsCard extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(10.w),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.25),
+                  color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.25),
                   borderRadius: BorderRadius.circular(12.r),
                 ),
-                child: Icon(icon, color: Colors.white, size: 24.w),
+                child: Icon(icon, color: Theme.of(context).colorScheme.onPrimary, size: 24.w),
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.25),
+                  color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.25),
                   borderRadius: BorderRadius.circular(20.r),
                 ),
                 child: Text(
                   'اليوم',
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: Colors.white,
+                   color: Theme.of(context).colorScheme.onPrimary,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -73,7 +73,7 @@ class StatsCard extends StatelessWidget {
           Text(
             title,
             style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.onPrimary,
               fontSize: 13.sp,
             ),
           ),
@@ -90,7 +90,7 @@ class StatsCard extends StatelessWidget {
           Text(
             subtitle,
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
-              color: Colors.white.withOpacity(0.8),
+              color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.8),
             ),
           ),
         ],

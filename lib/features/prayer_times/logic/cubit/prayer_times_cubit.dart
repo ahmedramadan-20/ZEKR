@@ -11,8 +11,30 @@ class PrayerTimesCubit extends Cubit<PrayerTimesState> {
   PrayerTimesCubit(this._prayerTimesRepo, this._notificationService)
     : super(const PrayerTimesState.initial());
 
-  /// Load prayer times
-  Future<void> loadPrayerTimes() async {
+  /// Load prayer times (with smart caching)
+  Future<void> loadPrayerTimes({bool forceRefresh = false}) async {
+    // Skip if data already loaded and still valid (same day) unless force refresh
+    if (!forceRefresh) {
+      // Check if we already have data from today
+      final shouldSkip = state.maybeWhen(
+        success: (prayerTimes) {
+          final loadedDate = prayerTimes.date;
+          final today = DateTime.now();
+
+          // Check if data is from today
+          return loadedDate.year == today.year &&
+              loadedDate.month == today.month &&
+              loadedDate.day == today.day;
+        },
+        orElse: () => false,
+      );
+
+      if (shouldSkip) {
+        // Data is fresh, no need to reload
+        return;
+      }
+    }
+
     emit(const PrayerTimesState.loading());
 
     try {
@@ -53,9 +75,9 @@ class PrayerTimesCubit extends Cubit<PrayerTimesState> {
     }
   }
 
-  /// Refresh prayer times
+  /// Refresh prayer times (force reload)
   Future<void> refresh() async {
-    await loadPrayerTimes();
+    await loadPrayerTimes(forceRefresh: true);
   }
 
   Future<void> _scheduleNotifications(PrayerTimesModel prayerTimes) async {

@@ -72,7 +72,7 @@ class FeatureCard extends StatelessWidget {
                         vertical: 6.h,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.9),
+                        color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.9),
                         borderRadius: BorderRadius.circular(20.r),
                       ),
                       child: Text(
@@ -91,7 +91,7 @@ class FeatureCard extends StatelessWidget {
                 title,
                 style: AppTextStyles.surahNameArabic.copyWith(
                   fontSize: 22.sp,
-                  color: Colors.white,
+                  color: Theme.of(context).colorScheme.onPrimary,
                 ),
               ),
               SizedBox(height: 8.h),
@@ -99,7 +99,7 @@ class FeatureCard extends StatelessWidget {
                 subtitle,
                 style: AppTextStyles.bodyMedium.copyWith(
                   fontFamily: 'Amiri',
-                  color: Colors.white.withOpacity(0.9),
+                  color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.9),
                 ),
               ),
             ],

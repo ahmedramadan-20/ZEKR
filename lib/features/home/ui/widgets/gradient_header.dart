@@ -42,7 +42,7 @@ class GradientHeader extends StatelessWidget {
                     Text(
                       greeting,
                       style: AppTextStyles.bodyOnGradient.copyWith(
-                        color: Colors.white.withOpacity(0.9),
+                        color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.9),
                       ),
                     ),
                     SizedBox(height: 4.h),
@@ -62,7 +62,7 @@ class GradientHeader extends StatelessWidget {
                       ),
                       child: Icon(
                         Icons.notifications_outlined,
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.onPrimary,
                         size: 24.w,
                       ),
                     ),
@@ -84,11 +84,11 @@ class GradientHeader extends StatelessWidget {
                     vertical: 12.h,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).cardColor,
                     borderRadius: BorderRadius.circular(16.r),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: Theme.of(context).shadowColor.withOpacity(0.1),
                         blurRadius: 10,
                         offset: const Offset(0, 4),
                       ),

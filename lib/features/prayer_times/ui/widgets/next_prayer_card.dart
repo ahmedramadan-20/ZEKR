@@ -81,7 +81,7 @@ class NextPrayerCard extends StatelessWidget {
               vertical: 8.h,
             ),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
+              color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.2),
               borderRadius: BorderRadius.circular(12.r),
             ),
             child: Row(

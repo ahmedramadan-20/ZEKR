@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/theming/app_colors.dart';
 import '../../data/models/search_result_model.dart';
+import 'highlighted_ayah_text.dart';
 
 class AyahSearchResultItem extends StatelessWidget {
   final SearchResult result;
+  final String? query;
   final VoidCallback onTap;
 
   const AyahSearchResultItem({
     super.key,
     required this.result,
+    this.query,
     required this.onTap,
   });
 
@@ -92,18 +95,10 @@ class AyahSearchResultItem extends StatelessWidget {
                   ],
                 ),
                 SizedBox(height: 8.h),
-                // Ayah text (truncated)
-                Text(
-                  ayah.text,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    height: 1.8,
-                    color: Theme.of(context).textTheme.bodyLarge?.color,
-                    fontFamily: 'Amiri',
-                  ),
-                  textDirection: TextDirection.rtl,
+                // Ayah text (truncated) with highlighting
+                HighlightedAyahText(
+                  text: ayah.text,
+                  query: query ?? '',
                 ),
               ],
             ),

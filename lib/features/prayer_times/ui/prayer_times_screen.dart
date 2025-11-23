@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import '../../../core/helpers/extensions.dart';
+
 import '../../../core/theming/app_colors.dart';
+import '../../../core/widgets/custom_app_bar.dart';
 
 import '../../../core/widgets/app_error_widget.dart';
 import '../../../core/widgets/app_loading_indicator.dart';
@@ -19,22 +20,10 @@ class PrayerTimesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: Text(
-          'مواقيت الصلاة',
-          style: Theme.of(
-            context,
-          ).textTheme.titleLarge?.copyWith(fontFamily: 'Amiri'),
-        ),
-        leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: Theme.of(context).iconTheme.color,
-          ),
-          onPressed: () => context.pop(),
-        ),
+      appBar: CustomAppBar(
+        title: 'مواقيت الصلاة',
+        useGradient: false,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         actions: [
           IconButton(
             icon: Icon(Icons.refresh, color: Theme.of(context).iconTheme.color),

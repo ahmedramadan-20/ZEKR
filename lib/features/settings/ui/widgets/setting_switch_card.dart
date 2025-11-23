@@ -48,7 +48,7 @@ class SettingSwitchCard extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(12.w),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.25),
+              color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.25),
               borderRadius: BorderRadius.circular(12.r),
             ),
             child: Icon(icon, color: Colors.white, size: 24.w),
@@ -63,14 +63,14 @@ class SettingSwitchCard extends StatelessWidget {
                   style: AppTextStyles.titleSmall.copyWith(
                     fontFamily: 'Amiri',
                     fontWeight: FontWeight.bold,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.onPrimary,
                   ),
                 ),
                 SizedBox(height: 4.h),
                 Text(
                   subtitle,
                   style: AppTextStyles.caption.copyWith(
-                    color: Colors.white.withOpacity(0.8),
+                    color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.8),
                   ),
                 ),
               ],
@@ -79,10 +79,10 @@ class SettingSwitchCard extends StatelessWidget {
           Switch(
             value: value,
             onChanged: onChanged,
-            activeThumbColor: Colors.white,
-            activeTrackColor: Colors.white.withOpacity(0.5),
-            inactiveThumbColor: Colors.white.withOpacity(0.7),
-            inactiveTrackColor: Colors.white.withOpacity(0.3),
+            activeThumbColor: Theme.of(context).colorScheme.onPrimary,
+            activeTrackColor: Theme.of(context).colorScheme.onPrimary.withOpacity(0.5),
+            inactiveThumbColor: Theme.of(context).colorScheme.onPrimary.withOpacity(0.7),
+            inactiveTrackColor: Theme.of(context).colorScheme.onPrimary.withOpacity(0.3),
           ),
         ],
       ),

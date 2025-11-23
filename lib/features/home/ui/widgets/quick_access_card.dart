@@ -49,10 +49,10 @@ class QuickAccessCard extends StatelessWidget {
               Container(
                 padding: EdgeInsets.all(12.w),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.25),
+                  color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.25),
                   borderRadius: BorderRadius.circular(12.r),
                 ),
-                child: Icon(icon, color: Colors.white, size: 24.w),
+                child: Icon(icon, color: Theme.of(context).colorScheme.onPrimary, size: 24.w),
               ),
               SizedBox(width: 16.w),
               Expanded(
@@ -64,7 +64,7 @@ class QuickAccessCard extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                         fontFamily: 'Amiri',
                         fontWeight: FontWeight.bold,
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.onPrimary,
                       ),
                     ),
                     SizedBox(height: 4.h),

@@ -27,7 +27,7 @@ class ContinueReadingCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(20.r),
             boxShadow: [
               BoxShadow(
-                color: AppColors.primary.withOpacity(0.3),
+                color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
                 blurRadius: 20,
                 offset: const Offset(0, 10),
               ),
@@ -80,7 +80,7 @@ class ContinueReadingCard extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(16.w),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.25),
+                    color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.25),
                     borderRadius: BorderRadius.circular(16.r),
                   ),
                   child: Icon(
