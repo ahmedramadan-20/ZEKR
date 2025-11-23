@@ -24,7 +24,7 @@ class SurahHeader extends StatelessWidget {
       margin: EdgeInsets.all(20.w),
       padding: EdgeInsets.all(24.w),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           colors: [AppColors.primary, AppColors.primaryLight],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,

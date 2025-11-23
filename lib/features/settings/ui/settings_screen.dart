@@ -313,7 +313,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             onPressed: () {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
+                const SnackBar(
                   content: Text(
                     'تم مسح ذاكرة التخزين المؤقت',
                     style: TextStyle(fontFamily: 'Amiri'),
@@ -361,7 +361,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               if (!mounted) return;
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
+                const SnackBar(
                   content: Text(
                     'تم حذف جميع الإشارات المرجعية',
                     style: TextStyle(fontFamily: 'Amiri'),
@@ -393,7 +393,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   void _rateApp() {
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
+      const SnackBar(
         content: Text(
           'شكراً لك! سيتم فتح صفحة التقييم',
           style: TextStyle(fontFamily: 'Amiri'),

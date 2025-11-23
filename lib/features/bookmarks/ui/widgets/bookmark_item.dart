@@ -98,7 +98,7 @@ class BookmarkItem extends StatelessWidget {
 
                 // Delete Button
                 IconButton(
-                  icon: Icon(Icons.delete_outline, color: AppColors.error),
+                  icon: const Icon(Icons.delete_outline, color: AppColors.error),
                   onPressed: onDelete,
                 ),
               ],

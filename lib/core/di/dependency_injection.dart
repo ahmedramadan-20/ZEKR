@@ -16,6 +16,7 @@ import '../helpers/shared_pref_helper.dart';
 import '../networking/api_service.dart';
 import '../networking/dio_factory.dart';
 import '../theming/theme_cubit.dart';
+import '../services/notification_service.dart';
 
 final getIt = GetIt.instance;
 
@@ -50,8 +51,11 @@ Future setupGetIt() async {
 
   // Prayer Times Feature
   getIt.registerLazySingleton(() => PrayerTimesRepo(getIt()));
-  getIt.registerFactory(() => PrayerTimesCubit(getIt()));
+  getIt.registerFactory(() => PrayerTimesCubit(getIt(), getIt()));
 
   // Theme
   getIt.registerLazySingleton(() => ThemeCubit(getIt()));
+
+  // Notifications
+  getIt.registerLazySingleton(() => NotificationService());
 }

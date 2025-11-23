@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 import '../../../core/theming/app_colors.dart';
 import '../../../core/widgets/app_error_widget.dart';
 import '../../../core/widgets/app_loading_indicator.dart';
@@ -37,6 +38,7 @@ class _SurahReaderScreenState extends State<SurahReaderScreen> {
   void initState() {
     super.initState();
     _loadFontSize();
+    WakelockPlus.enable();
   }
 
   void _loadFontSize() {
@@ -56,6 +58,7 @@ class _SurahReaderScreenState extends State<SurahReaderScreen> {
 
   @override
   void dispose() {
+    WakelockPlus.disable();
     _scrollController.dispose();
     super.dispose();
   }
@@ -86,7 +89,7 @@ class _SurahReaderScreenState extends State<SurahReaderScreen> {
               width: double.infinity,
               decoration: BoxDecoration(
                 gradient: AppColors.getPrimaryGradient(context),
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(32),
                   bottomRight: Radius.circular(32),
                 ),
@@ -226,7 +229,9 @@ class _SurahReaderScreenState extends State<SurahReaderScreen> {
                                           return Column(
                                             children: [
                                               AyahCard(
-                                                key: ValueKey('ayah_${ayah.number}'),
+                                                key: ValueKey(
+                                                  'ayah_${ayah.number}',
+                                                ),
                                                 ayah: ayah,
                                                 surahName: surahDetail.name,
                                                 surahNumber: surahDetail.number,
@@ -234,7 +239,9 @@ class _SurahReaderScreenState extends State<SurahReaderScreen> {
                                                     .contains(
                                                       ayah.numberInSurah,
                                                     ),
-                                                isFirstAyahOfSurah: ayah.numberInSurah == 1 && isFirstPage,
+                                                isFirstAyahOfSurah:
+                                                    ayah.numberInSurah == 1 &&
+                                                    isFirstPage,
                                                 onBookmarkToggle: () {
                                                   final wasBookmarked =
                                                       bookmarkedAyahs.contains(

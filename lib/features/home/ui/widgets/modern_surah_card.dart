@@ -38,11 +38,11 @@ class ModernSurahCard extends StatelessWidget {
             border: isLastRead
                 ? Border.all(color: AppColors.primary, width: 2)
                 : null,
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: AppColors.shadowLight,
                 blurRadius: 10,
-                offset: const Offset(0, 4),
+                offset: Offset(0, 4),
               ),
             ],
           ),

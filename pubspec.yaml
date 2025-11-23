@@ -57,6 +57,9 @@ dependencies:
   adhan: any
   geolocator: ^13.0.2
   permission_handler: ^11.3.1
+  wakelock_plus: ^1.4.0
+  flutter_local_notifications: ^19.5.0
+  timezone: ^0.10.1
   
 
 dev_dependencies:

@@ -9,9 +9,7 @@ import '../../../core/widgets/app_loading_indicator.dart';
 import '../../../core/routing/app_router.dart';
 import '../logic/cubit/search_cubit.dart';
 import '../logic/cubit/search_state.dart';
-import '../data/models/search_result_model.dart';
 import 'widgets/empty_search_state.dart';
-import 'widgets/search_result_item.dart';
 import 'widgets/ayah_search_result_item.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -56,7 +54,7 @@ class _SearchScreenState extends State<SearchScreen> {
               width: double.infinity,
               decoration: BoxDecoration(
                 gradient: AppColors.getPrimaryGradient(context),
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(32),
                   bottomRight: Radius.circular(32),
                 ),
@@ -153,7 +151,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             builder: (context, value, _) {
                               return value.text.isNotEmpty
                                   ? IconButton(
-                                      icon: Icon(
+                                      icon: const Icon(
                                         Icons.clear,
                                         color: AppColors.textSecondary,
                                       ),
@@ -215,7 +213,9 @@ class _SearchScreenState extends State<SearchScreen> {
 
                               // All results are Ayahs now
                               return RepaintBoundary(
-                                key: ValueKey('sr_${result.surah.number}_${result.ayah?.numberInSurah ?? 0}'),
+                                key: ValueKey(
+                                  'sr_${result.surah.number}_${result.ayah?.numberInSurah ?? 0}',
+                                ),
                                 child: AyahSearchResultItem(
                                   result: result,
                                   onTap: () {
@@ -237,29 +237,31 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                     empty: () => const EmptySearchState(isNoResults: true),
                     error: (message) => Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(16.w),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(
-                              Icons.error_outline,
-                              size: 60.sp,
-                              color: AppColors.error,
-                            ),
-                            SizedBox(height: 16.h),
-                            Text(
-                              message,
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                color: Theme.of(
-                                  context,
-                                ).textTheme.bodyLarge?.color,
-                                fontFamily: 'Amiri',
+                      child: SingleChildScrollView(
+                        child: Padding(
+                          padding: EdgeInsets.all(16.w),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                Icons.error_outline,
+                                size: 60.sp,
+                                color: AppColors.error,
                               ),
-                            ),
-                          ],
+                              SizedBox(height: 16.h),
+                              Text(
+                                message,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 16.sp,
+                                  color: Theme.of(
+                                    context,
+                                  ).textTheme.bodyLarge?.color,
+                                  fontFamily: 'Amiri',
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

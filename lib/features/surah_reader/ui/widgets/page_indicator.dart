@@ -52,7 +52,7 @@ class PageIndicator extends StatelessWidget {
                     vertical: 10.h,
                   ),
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
+                    gradient: const LinearGradient(
                       colors: [AppColors.primary, AppColors.primaryLight],
                     ),
                     borderRadius: BorderRadius.circular(25.r),

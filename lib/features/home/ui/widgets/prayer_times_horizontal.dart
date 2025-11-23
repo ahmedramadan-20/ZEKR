@@ -30,7 +30,7 @@ class PrayerTimesHorizontal extends StatelessWidget {
     return Container(
       height: 120.h,
       padding: EdgeInsets.symmetric(vertical: 16.h),
-      child: Center(
+      child: const Center(
         child: CircularProgressIndicator(
           color: AppColors.primary,
           strokeWidth: 2,
