@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:quran/features/home/data/models/surah_response.dart';
-import 'package:quran/features/home/data/models/surah_detail_response.dart';
+import 'package:quran/features/quran/data/models/surah_response.dart';
+import 'package:quran/features/quran/data/models/surah_detail_response.dart';
 import 'api_constants.dart';
 
 part 'api_service.g.dart';

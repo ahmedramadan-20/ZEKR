@@ -35,4 +35,13 @@ class DioFactory {
       ),
     );
   }
+
+  /// Dispose Dio instance and close all connections
+  /// Call this when app is closing to prevent memory leaks
+  static Future<void> dispose() async {
+    if (dio != null) {
+      dio!.close(force: true);
+      dio = null;
+    }
+  }
 }
